@@ -1,10 +1,14 @@
-import { Button } from "@/components/ui/button";
+import ProductList from "@/components/shared/product/ProductList";
+import sampleData from "@/db/sample-data";
 
 const Homepage = () => {
   return (
     <>
-      cardstore
-      <Button>Button</Button>
+      <ProductList
+        data={sampleData.products}
+        title="Newest Arrivals"
+        limit={4}
+      />
     </>
   );
 };
