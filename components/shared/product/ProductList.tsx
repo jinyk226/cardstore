@@ -1,20 +1,13 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import { Product } from "@/types";
 
 const ProductList = ({
   data,
   title,
   limit,
 }: {
-  data: {
-    name: string;
-    slug: string;
-    images: string[];
-    brand: string;
-    rating?: number;
-    price: number;
-    stock: number;
-  }[];
+  data: Product[];
   title?: string;
   limit?: number;
 }) => {
