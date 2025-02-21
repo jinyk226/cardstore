@@ -1,6 +1,6 @@
 import "@/assets/styles/globals.css";
-import Footer from "@/components/shared/Footer";
-import Header from "@/components/shared/Header";
+import Footer from "@/components/shared/Footer/index";
+import Header from "@/components/shared/Header/index";
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Metadata } from "next";
 
