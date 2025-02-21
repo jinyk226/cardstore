@@ -1,0 +1,66 @@
+import NextAuth from "next-auth";
+import { prisma } from "./db/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compareSync } from "bcrypt-ts-edge";
+import type { NextAuthConfig } from "next-auth";
+
+export const config = {
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify-request", // (used for check email message)
+    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  providers: [
+    CredentialsProvider({
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (credentials == null) return null;
+
+        const user = await prisma.user.findFirst({
+          where: { email: String(credentials.email) },
+        });
+
+        if (user && user.password) {
+          const isMatch = compareSync(
+            String(credentials.password),
+            user.password
+          );
+
+          if (isMatch) {
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            };
+          }
+        }
+        return null;
+      },
+    }),
+  ],
+  callbacks: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async session({ session, user, token, trigger }: any) {
+      session.user.id = token.sub;
+
+      if (trigger === "update") {
+        session.user.name = user.name;
+      }
+      return session;
+    },
+  },
+} satisfies NextAuthConfig;
+
+export const { handlers, auth, signIn, signOut } = NextAuth(config);
