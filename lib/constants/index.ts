@@ -7,6 +7,7 @@ export const SERVER_URL =
 export const LATEST_PRODUCTS_LIMIT =
   Number(process.env.NEXT_PUBLIC_LATEST_PRODUCTS_LIMIT) || 4;
 
+//! DO NOT LEAVE SENSITIVE INFORMATION HERE!! IF COMMITTED, REVERT THE COMMIT BEFORE PUSHING
 export const signInDefaultValues = {
   email: "",
   password: "",
