@@ -1,11 +1,13 @@
+"use server";
+
 import { signInFormSchema } from "../validators";
 import { signIn as nextAuthSignIn, signOut as nextAuthSignOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export const signInWithCredentials = async (
-  prevState: unknown,
+  _prevState: unknown,
   formData: FormData
-) => {
+): Promise<{ success: boolean; message: string }> => {
   try {
     const user = signInFormSchema.parse({
       email: formData.get("email"),
@@ -24,6 +26,6 @@ export const signInWithCredentials = async (
   }
 };
 
-export const signOut = async () => {
+export const signOut = async (): Promise<void> => {
   await nextAuthSignOut();
 };
