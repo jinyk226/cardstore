@@ -14,7 +14,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import SignUpForm from "./SignUpForm";
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Sign Up",
 };
 
 const SignUpPage = async (props: {
