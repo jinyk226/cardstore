@@ -9,7 +9,7 @@ import {
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "@/db/prisma";
-import { formatError } from "../utils";
+import { formatSignUpError } from "../utils";
 
 export const signInWithCredentials = async (
   _prevState: unknown,
@@ -65,6 +65,6 @@ export const signUpUser = async (prevState: unknown, formData: FormData) => {
       throw error;
     }
 
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatSignUpError(error) };
   }
 };
