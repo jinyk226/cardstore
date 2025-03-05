@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductPrice from "@/components/shared/product/ProductPrice";
-import { Button } from "@/components/ui/button";
 import ProductImages from "@/components/shared/product/ProductImages";
+import AddToCart from "@/components/shared/product/AddToCart";
 
 const ProductDetailsPage = async ({
   params,
@@ -63,7 +63,16 @@ const ProductDetailsPage = async ({
                 </div>
                 {product.stock > 0 && (
                   <div className="flex-center mt-4">
-                    <Button className="w-full">Add to Cart</Button>
+                    <AddToCart
+                      item={{
+                        productId: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        price: product.price,
+                        qty: 1,
+                        image: product.images[0],
+                      }}
+                    />
                   </div>
                 )}
               </CardContent>

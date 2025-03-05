@@ -1,6 +1,7 @@
 import "@/assets/styles/globals.css";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
+import { Toaster } from "@/components/ui/sonner";
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Metadata } from "next";
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <div className="flex h-screen flex-col">
       <Header />
       <main className="flex-1 wrapper">{children}</main>
+      <Toaster />
       <Footer />
     </div>
   );
